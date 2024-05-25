@@ -1,0 +1,14 @@
+{% extends "main/base.html" %}
+{% block title %} Вход {% endblock %}
+
+{% block content %}
+    <h1>Ввод смс-кода</h1>
+    <div class="login-form">
+        <form action="{% url 'code' %}" method="post">
+            <label for="code">Код из смс:</label>
+            <input type="text" name="code" required minlength="4" maxlength="4" size="10" />
+            {% csrf_token %}
+            <p><input type="submit" value="Отправить"></p>
+        </form>
+    </div>
+{% endblock %}

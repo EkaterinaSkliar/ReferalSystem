@@ -17,6 +17,9 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'main.User'
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

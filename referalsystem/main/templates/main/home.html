@@ -1,0 +1,17 @@
+{% extends "main/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  <h1>Ваш профиль</h1>
+  <p>Ваш инвайт-код: {{ request.user.invite_code }}</p>
+  {% if request.user.invites is None %}
+    <form action="{% url 'invite' %}" method="post">
+      <label for="code">Чужой инвайт-код:</label>
+            <input type="text" name="invite" required minlength="4" maxlength="6" size="10" />
+            {% csrf_token %}
+            <p><input type="submit" value="Отправить"></p>
+        </form>
+  {% else %}
+        <p>Чужой инвайт-код: {{ request.user.invites }}</p>
+  {% endif %}
+{% endblock %}
