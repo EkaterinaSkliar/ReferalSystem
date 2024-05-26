@@ -12,7 +12,7 @@
         <p>Пожалуйста, воспользуйтесь следующей формой для входа в систему:</p>
     {% endif %}
     <div class="login-form">
-        <form action="{% url 'auth' %}" method="post">
+        <form action="{% url 'login' %}" method="post">
             {{ form.as_p }}
             {% csrf_token %}
             <p><input type="submit" value="Войти"></p>
