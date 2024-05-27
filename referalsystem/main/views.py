@@ -9,24 +9,19 @@ from .forms import UserForm
 from .models import User
 
 
-def user_login(request):
+def get_sms_code(request):
     form = UserForm()
     if request.method == 'POST':
         phone_number = request.POST['phone_number']
         try:
             user = User.objects.get(phone_number=phone_number)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                return render(request, 'registration/code.html')
+            return render(request, 'registration/code.html', {'user': user})
         except ObjectDoesNotExist:
             invite_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-            new_user = User.objects.create(
+            user = User.objects.create(
                 phone_number=phone_number,
                 invite_code=invite_code)
-            new_user.save()
-            login(request, new_user)
-            return render(request, 'registration/code.html')
+            return render(request, 'registration/code.html', {'user': user})
     return render(request, 'registration/login.html', {'form': form})
 
 
@@ -36,6 +31,9 @@ def logout_view(request):
 
 
 def sms_code(request):
+    user_id = request.POST['user_id']
+    user = User.objects.get(id=user_id)
+    login(request, user)
     return home(request)
 
 

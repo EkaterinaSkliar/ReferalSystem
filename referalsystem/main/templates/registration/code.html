@@ -5,9 +5,10 @@
     <h1>Ввод смс-кода</h1>
     <div class="login-form">
         <form action="{% url 'code' %}" method="post">
-            <label for="code">Код из смс:</label>
+            <label>Код из смс:</label>
             <input type="text" name="code" required minlength="4" maxlength="4" size="10" />
             {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}" />
             <p><input type="submit" value="Отправить"></p>
         </form>
     </div>
