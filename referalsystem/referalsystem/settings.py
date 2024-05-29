@@ -15,10 +15,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'main.User'
-
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -113,3 +109,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'main.User'
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+SMS_CODE_LIFE_IN_SECONDS = 180

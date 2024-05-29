@@ -1,6 +1,9 @@
+from django_cryptography.fields import encrypt
+
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -31,3 +34,10 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.phone_number
+
+
+class SmsCode(models.Model):
+    phone_number = models.CharField(max_length=11, db_index=True)
+    date = models.DateTimeField(default=timezone.now, db_index=True)
+    code = encrypt(models.CharField(max_length=4, db_index=True))
+    used = models.BooleanField(default=False)

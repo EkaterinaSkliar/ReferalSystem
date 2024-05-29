@@ -5,11 +5,20 @@
     <h1>Ввод смс-кода</h1>
     <div class="login-form">
         <form action="{% url 'code' %}" method="post">
-            <label>Код из смс:</label>
-            <input type="text" name="code" required minlength="4" maxlength="4" size="10" />
+            <h2>Код отправили сообщением на {{ sms_code.phone_number }}</h2>
+            <label>Код из смс:( {{ sms_code.code }} )</label>
+            <input type="text" name="sms_code" required minlength="4" maxlength="4" size="10" />
             {% csrf_token %}
-            <input type="hidden" name="user_id" value="{{ user.id }}" />
+            <p><font color='red'>{{ error }}</font></p>
+            <input type="hidden" name="phone_number" value="{{ sms_code.phone_number }}" />
             <p><input type="submit" value="Отправить"></p>
         </form>
+        {% if error %}
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <p><input type="submit" value="Отправить новый код"></p>
+            <input type="hidden" name="phone_number" value="{{ sms_code.phone_number }}" />
+        </form>
+        {% endif %}
     </div>
 {% endblock %}
