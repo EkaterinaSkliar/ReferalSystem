@@ -3,15 +3,26 @@
 
 {% block content %}
   <h1>Ваш профиль</h1>
-  <p>Ваш инвайт-код: {{ request.user.invite_code }}</p>
-  {% if request.user.invites is None %}
+  <p>Ваш инвайт-код: {{ user.invite_code }}</p>
+  {% if user.invites is None %}
     <form action="{% url 'invite' %}" method="post">
-      <label for="code">Чужой инвайт-код:</label>
-            <input type="text" name="invite" required minlength="4" maxlength="6" size="10" />
+      <label>Чужой инвайт-код:</label>
+            <input type="text" name="invite" required maxlength="6" size="10" />
             {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}" />
+            <p><font color='red'>{{ error }}</font></p>
             <p><input type="submit" value="Отправить"></p>
         </form>
   {% else %}
-        <p>Чужой инвайт-код: {{ request.user.invites }}</p>
+        <p>Чужой инвайт-код:<input type="text" name="invite" required maxlength="6" size="10" value="{{ user.invites.invite_code }}" readonly /></p>
   {% endif %}
+
+<label>Пользователи,которые ввели ваш инвайт-код:</label>
+<ul>
+    {% for invite in invites %}
+        <li>{{ invite.phone_number }}</li>
+    {% empty %}
+        <li>Список пуст.</li>
+    {% endfor %}
+</ul>
 {% endblock %}
