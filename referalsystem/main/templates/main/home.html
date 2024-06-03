@@ -4,7 +4,7 @@
 {% block content %}
   <h1>Ваш профиль</h1>
   <p>Ваш инвайт-код: {{ user.invite_code }}</p>
-  {% if user.invites is None %}
+  {% if user.inviter is None %}
     <form action="{% url 'invite' %}" method="post">
       <label>Чужой инвайт-код:</label>
             <input type="text" name="invite" required maxlength="6" size="10" />
@@ -14,12 +14,12 @@
             <p><input type="submit" value="Отправить"></p>
         </form>
   {% else %}
-        <p>Чужой инвайт-код:<input type="text" name="invite" required maxlength="6" size="10" value="{{ user.invites.invite_code }}" readonly /></p>
+        <p>Чужой инвайт-код:<input type="text" name="invite" required maxlength="6" size="10" value="{{ user.inviter.invite_code }}" readonly /></p>
   {% endif %}
 
 <label>Пользователи,которые ввели ваш инвайт-код:</label>
 <ul>
-    {% for invite in invites %}
+    {% for invite in invited %}
         <li>{{ invite.phone_number }}</li>
     {% empty %}
         <li>Список пуст.</li>

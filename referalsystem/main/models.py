@@ -26,7 +26,7 @@ class User(AbstractUser):
     username = None
     phone_number = models.CharField(max_length=11, unique=True)
     invite_code = models.CharField(max_length=6, blank=True, null=True)
-    invites = models.ForeignKey('self', on_delete=models.CASCADE, related_name="inviting", null=True, blank=True)
+    inviter = models.ForeignKey('self', on_delete=models.CASCADE, related_name="invited", null=True, blank=True)
 
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []
